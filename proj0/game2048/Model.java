@@ -140,7 +140,7 @@ public class Model extends Observable {
         int lineSize = b.size();
         for (int row = 0; row < lineSize; row++) {
             for (int col = 0; col < lineSize; col++) {
-                if (b.tile(col, row) != null) {
+                if (b.tile(col, row) == null) {
                     return true;
                 }
             }
