@@ -114,33 +114,17 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        board.setViewingPerspective(side);
         boolean[][] merged = new boolean[board.size()][board.size()];
         for (int row = board.size() - 2; row >= 0; row--) {
             for (int col = 0; col < board.size(); col++) {
-                Tile tile = board.tile(col, row);
-//                可以考虑写一个递归方法来向上找到
-                if (tile == null) {
+                if (board.tile(col,row) == null) {
                     continue;
                 }
-                int aboveRow = row + 1;
-                Tile aboveTile = null;
-                while (aboveRow < board.size()) {
-                    aboveTile = board.tile(col, aboveRow);
-                    if (aboveTile != null) {
-                        break;
-                    }
-                    aboveRow++;
-                }
-                if (aboveTile != null && !merged[col][aboveRow] && aboveTile.value() == tile.value()) {
-                    board.move(col, aboveRow, tile);
-                    merged[col][aboveRow] = true;
-                    score += tile.value() * 2;
-                } else {
-                    board.move(col, aboveRow - 1, tile);
-                }
+                 changed = moveTile(col,row,merged) || changed;
             }
         }
-        changed = true;
+        board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
@@ -148,6 +132,26 @@ public class Model extends Observable {
         return changed;
     }
 
+    private boolean moveTile(int col, int row,boolean[][] merged) {
+        Tile tile = board.tile(col, row);
+        int aboveRow = row + 1;
+        Tile aboveTile = null;
+        while (aboveRow < board.size()) {
+            aboveTile = board.tile(col, aboveRow);
+            if (aboveTile != null) {
+                break;
+            }
+            aboveRow++;
+        }
+        if (aboveTile != null && !merged[col][aboveRow] && aboveTile.value() == tile.value()) {
+            board.move(col, aboveRow, tile);
+            merged[col][aboveRow] = true;
+            score += tile.value() * 2;
+        } else {
+            board.move(col, aboveRow - 1, tile);
+        }
+        return true;
+    }
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
      */
