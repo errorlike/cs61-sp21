@@ -39,13 +39,11 @@ public class TestBuggyAList {
                 int randVal = StdRandom.uniform(0, 100);
                 L.addLast(randVal);
                 B.addLast(randVal);
-                System.out.println("addLast(" + randVal + ")");
             } else if (operationNumber == 1) {
                 // size
                 int size = L.size();
                 int bSize = B.size();
                 assertEquals(size, bSize);
-                System.out.println("size: " + size);
             } else if (operationNumber == 2) {
                 if (L.size() == 0) {
                     continue;
