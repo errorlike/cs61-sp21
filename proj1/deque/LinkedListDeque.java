@@ -1,5 +1,9 @@
 package deque;
 
+/*
+ * sentinel.next指向首个节点
+ * sentinel.next.prev指向末尾节点。
+ * */
 public class LinkedListDeque<Item> {
     private ListNode sentinel;
     private int size;
@@ -52,4 +56,47 @@ public class LinkedListDeque<Item> {
         return removed;
     }
 
+    public Item removeLast() {
+        if (sentinel.next.prev == null) {
+            return null;
+        }
+        Item removed = sentinel.next.prev.item;
+        sentinel.next.prev = sentinel.next.prev.prev;
+        size--;
+        return removed;
+    }
+
+    public Item get(int index) {
+        if (!checkIndexInRange(index)) {
+            return null;
+        }
+        ListNode node = sentinel.next;
+        int i = 0;
+        while (node != null) {
+            if (index == i) {
+                break;
+            }
+            node = node.next;
+            i++;
+        }
+        return node.item;
+    }
+
+    public Item getRecursive(int index) {
+        return getRecursive(sentinel.next, index);
+    }
+
+    private Item getRecursive(ListNode cursor, int index) {
+        if (checkIndexInRange(index)) {
+            if (index == 0) {
+                return cursor.item;
+            }
+            getRecursive(cursor.next, index - 1);
+        }
+        return null;
+    }
+
+    private boolean checkIndexInRange(int index) {
+        return index >= 0 && index < size;
+    }
 }
