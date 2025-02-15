@@ -99,4 +99,14 @@ public class LinkedListDeque<Item> {
     private boolean checkIndexInRange(int index) {
         return index >= 0 && index < size;
     }
+    public void printDeque(){
+        ListNode node = sentinel.next;
+        while (node!=null){
+            System.out.print(node.item+" ");
+            if(node.next==null){
+                System.out.print(node.item);
+            }
+        }
+        System.out.println();
+    }
 }
