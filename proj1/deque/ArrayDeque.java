@@ -1,5 +1,7 @@
 package deque;
 
+//1.数组始终从0开始
+//2. 数组满的时候，nextFirst指向end,nextLast指向start
 public class ArrayDeque<Item> {
     int size;
     private Item[] items;
@@ -11,11 +13,21 @@ public class ArrayDeque<Item> {
     }
 
     public void addFirst(Item item) {
+        if (size == items.length) {
+            resize(size * 2);
+        }
         items[nextFirst] = item;
+        nextFirst = nextFirst - 1 >= 0 ? nextFirst - 1 : size - 1;
+        size++;
     }
 
     public void addLast(Item item) {
+        if (size == items.length) {
+            resize(size * 2);
+        }
         items[nextLast] = item;
+        nextLast = nextLast + 1 != size ? nextLast + 1 : 0;
+        size++;
     }
 
     public boolean isEmpty() {
@@ -39,9 +51,11 @@ public class ArrayDeque<Item> {
         }
     }
 
-    //循环和时钟类似，利用余数来查找位置
     public Item removeFirst() {
-        int first = (nextFirst + 1) % 8;
+        if (size >= 16 && size < items.length / 4) {
+            resize(items.length / 4);
+        }
+        int first = nextFirst + 1 != size ? nextFirst + 1 : 0;
         Item removed = items[first];
         items[first] = null;
         size--;
@@ -49,10 +63,36 @@ public class ArrayDeque<Item> {
     }
 
     public Item removeLast() {
-        int last = (nextLast - 1 + items.length) % 8;
+        if (size >= 16 && size < items.length / 4) {
+            resize(items.length / 4);
+        }
+        int last = nextLast - 1 >= 0 ? nextLast - 1 : size - 1;
         Item removed = items[last];
         items[last] = null;
         size--;
         return removed;
+    }
+
+    private void resize(int capacity) {
+        items = copyArray(capacity);
+        nextLast = size;
+        nextFirst = nextLast;
+    }
+
+    private Item[] copyArray(int capacity) {
+        Item[] newArray = (Item[]) new Object[capacity];
+        int cursor = nextLast;
+        for (int i = 0; i < size; i++) {
+            if (cursor == size) {
+                cursor = 0;
+            }
+            newArray[i] = items[cursor];
+            cursor++;
+        }
+        return newArray;
+    }
+
+    public Item get(int index) {
+        return items[index];
     }
 }
