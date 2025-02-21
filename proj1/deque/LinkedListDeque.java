@@ -2,7 +2,7 @@ package deque;
 
 /*
  * sentinel.next指向首个节点
- * sentinel.next.prev指向末尾节点。
+ * sentinel.prev指向末尾节点。
  * */
 public class LinkedListDeque<Item> {
     private ListNode sentinel;
@@ -25,17 +25,27 @@ public class LinkedListDeque<Item> {
     }
 
     public void addFirst(Item item) {
-        ListNode start = sentinel.next;
-        ListNode newStart = new ListNode(item, start, sentinel.next);
-        start.prev = sentinel.next;
-        sentinel.next = newStart;
+        ListNode first = new ListNode(item, sentinel, sentinel.next);
+        if (sentinel.prev == null) {
+            sentinel.prev = first;
+        }
+        if (sentinel.next != null) {
+            sentinel.next.prev = first;
+        }
+        sentinel.next = first;
         size++;
     }
 
     public void addLast(Item item) {
-        ListNode last = sentinel.next.prev;
-        ListNode newLast = new ListNode(item, last, sentinel.next);
-        last.next = newLast;
+        ListNode last = new ListNode(item, sentinel.prev, sentinel);
+        if (sentinel.next == null) {
+            sentinel.next = last;
+        }
+        if (sentinel.prev != null) {
+            sentinel.prev.next = last;
+        }
+        sentinel.prev = last;
+        size++;
     }
 
     public boolean isEmpty() {
@@ -47,7 +57,7 @@ public class LinkedListDeque<Item> {
     }
 
     public Item removeFirst() {
-        if (sentinel.next == null) {
+        if (isEmpty()) {
             return null;
         }
         Item removed = sentinel.next.item;
@@ -57,11 +67,11 @@ public class LinkedListDeque<Item> {
     }
 
     public Item removeLast() {
-        if (sentinel.next.prev == null) {
+        if (isEmpty()) {
             return null;
         }
-        Item removed = sentinel.next.prev.item;
-        sentinel.next.prev = sentinel.next.prev.prev;
+        Item removed = sentinel.prev.item;
+        sentinel.prev = sentinel.prev.prev;
         size--;
         return removed;
     }
@@ -99,13 +109,18 @@ public class LinkedListDeque<Item> {
     private boolean checkIndexInRange(int index) {
         return index >= 0 && index < size;
     }
-    public void printDeque(){
+
+    public void printDeque() {
         ListNode node = sentinel.next;
-        while (node!=null){
-            System.out.print(node.item+" ");
-            if(node.next==null){
+        int count = 0;
+        while (true) {
+            if (count == size - 1) {
                 System.out.print(node.item);
+                break;
             }
+            System.out.print(node.item + " ");
+            node = node.next;
+            count++;
         }
         System.out.println();
     }
