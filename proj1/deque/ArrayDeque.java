@@ -3,7 +3,7 @@ package deque;
 //1.数组始终从0开始
 //2. 数组满的时候，nextFirst指向end,nextLast指向start
 public class ArrayDeque<Item> {
-    int size;
+    private int size;
     private Item[] items;
     private int nextFirst;
     private int nextLast;
@@ -17,7 +17,7 @@ public class ArrayDeque<Item> {
             resize(size * 2);
         }
         items[nextFirst] = item;
-        nextFirst = nextFirst - 1 >= 0 ? nextFirst - 1 : size - 1;
+        nextFirst = nextFirst - 1 >= 0 ? nextFirst - 1 : items.length - 1;
         size++;
     }
 
@@ -26,7 +26,7 @@ public class ArrayDeque<Item> {
             resize(size * 2);
         }
         items[nextLast] = item;
-        nextLast = nextLast + 1 != size ? nextLast + 1 : 0;
+        nextLast = nextLast + 1 != items.length ? nextLast + 1 : 0;
         size++;
     }
 
@@ -55,10 +55,11 @@ public class ArrayDeque<Item> {
         if (size >= 16 && size < items.length / 4) {
             resize(items.length / 4);
         }
-        int first = nextFirst + 1 != size ? nextFirst + 1 : 0;
+        int first = nextFirst + 1 != items.length ? nextFirst + 1 : 0;
         Item removed = items[first];
         items[first] = null;
         size--;
+        nextFirst = first;
         return removed;
     }
 
@@ -70,6 +71,7 @@ public class ArrayDeque<Item> {
         Item removed = items[last];
         items[last] = null;
         size--;
+        nextLast = last;
         return removed;
     }
 
