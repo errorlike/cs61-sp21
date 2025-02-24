@@ -16,6 +16,9 @@ public class ArrayDeque<Item> {
         if (size == items.length) {
             resize(size * 2);
         }
+        if (isEmpty()) {
+            nextLast++;
+        }
         items[nextFirst] = item;
         nextFirst = nextFirst - 1 >= 0 ? nextFirst - 1 : items.length - 1;
         size++;
@@ -24,6 +27,9 @@ public class ArrayDeque<Item> {
     public void addLast(Item item) {
         if (size == items.length) {
             resize(size * 2);
+        }
+        if (isEmpty()) {
+            nextFirst= items.length-1;
         }
         items[nextLast] = item;
         nextLast = nextLast + 1 != items.length ? nextLast + 1 : 0;
@@ -42,20 +48,23 @@ public class ArrayDeque<Item> {
     }
 
     public void printDeque() {
+        int cursor = getFirstIndex();
         for (int i = 0; i < size; i++) {
-            System.out.print(items[i] + " ");
             if (i == size - 1) {
-                System.out.print(items[i]);
+                System.out.print(items[cursor]);
+            } else {
+                System.out.print(items[cursor] + " ");
             }
-            System.out.println();
+            cursor = cursor + 1 != items.length ? cursor + 1 : 0;
         }
+            System.out.println();
     }
 
     public Item removeFirst() {
         if (size >= 16 && size < items.length / 4) {
             resize(items.length / 4);
         }
-        int first = nextFirst + 1 != items.length ? nextFirst + 1 : 0;
+        int first =getFirstIndex();
         Item removed = items[first];
         items[first] = null;
         size--;
@@ -67,7 +76,7 @@ public class ArrayDeque<Item> {
         if (size >= 16 && size < items.length / 4) {
             resize(items.length / 4);
         }
-        int last = nextLast - 1 >= 0 ? nextLast - 1 : size - 1;
+        int last = getLastIndex();
         Item removed = items[last];
         items[last] = null;
         size--;
@@ -77,13 +86,14 @@ public class ArrayDeque<Item> {
 
     private void resize(int capacity) {
         items = copyArray(capacity);
+        nextFirst = items.length - 1;
         nextLast = size;
-        nextFirst = nextLast;
     }
 
     private Item[] copyArray(int capacity) {
         Item[] newArray = (Item[]) new Object[capacity];
-        int cursor = nextLast;
+
+        int cursor = getFirstIndex();
         for (int i = 0; i < size; i++) {
             if (cursor == size) {
                 cursor = 0;
@@ -95,6 +105,15 @@ public class ArrayDeque<Item> {
     }
 
     public Item get(int index) {
-        return items[index];
+        int calculated = (getFirstIndex()+index)% items.length;
+        return items[calculated];
+    }
+
+    private int getFirstIndex() {
+        return nextFirst + 1 != items.length ? nextFirst + 1 : 0;
+    }
+
+    private int getLastIndex() {
+        return nextLast - 1 >= 0 ? nextLast - 1 : size - 1;
     }
 }

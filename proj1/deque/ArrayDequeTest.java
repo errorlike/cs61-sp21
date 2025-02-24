@@ -26,15 +26,21 @@ public class ArrayDequeTest {
         assertEquals(expected.remove(expected.size() - 1), actual.removeLast());
         assertEquals(expected.remove(expected.size() - 1), actual.removeLast());
     }
-
+    @Test
+    public void addOnlyOne(){
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+        list.addFirst(5);
+        list.addLast(1);
+        assertEquals(5, (int) list.get(0));
+    }
     @Test
     public void testTreeAddFirstThreeRemoveFirst() {
         ArrayList<Integer> expected = new ArrayList<>();
         ArrayDeque<Integer> actual = new ArrayDeque<>();
 
-        expected.add(0,1);
-        expected.add(0,2);
-        expected.add(0,3);
+        expected.add(0, 1);
+        expected.add(0, 2);
+        expected.add(0, 3);
 
         actual.addFirst(1);
         actual.addFirst(2);
@@ -44,6 +50,7 @@ public class ArrayDequeTest {
         assertEquals(expected.remove(0), actual.removeFirst());
         assertEquals(expected.remove(0), actual.removeFirst());
     }
+
     @Test
     public void randomizedTest() {
         ArrayList<Integer> L = new ArrayList<>();
@@ -62,13 +69,13 @@ public class ArrayDequeTest {
                 int bSize = B.size();
                 assertEquals(size, bSize);
             } else if (operationNumber == 2) {
-                if (L.size() == 0) {
+                if (L.isEmpty()) {
                     continue;
                 }
                 assertEquals(L.get(L.size() - 1), B.get(B.size() - 1));
 
             } else if (operationNumber == 3) {
-                if (L.size() == 0) {
+                if (L.isEmpty()) {
                     continue;
                 }
                 assertEquals(L.remove(L.size() - 1), B.removeLast());
@@ -76,4 +83,17 @@ public class ArrayDequeTest {
 
         }
     }
+
+    @Test
+    public void addResize() {
+        ArrayDeque<Integer> actual = new ArrayDeque<>();
+        for (int i = 0; i < 18; i++) {
+            actual.addFirst(i);
+        }
+        for (int i = 18; i < 40; i++) {
+            actual.addLast(i);
+        }
+        actual.printDeque();
+    }
+
 }
