@@ -96,4 +96,10 @@ public class ArrayDequeTest {
         actual.printDeque();
     }
 
+    @Test
+    public void removeToNeg() {
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+        list.removeLast();
+        list.removeFirst();
+    }
 }

@@ -61,6 +61,9 @@ public class ArrayDeque<Item> {
     }
 
     public Item removeFirst() {
+        if(isEmpty()){
+            return null;
+        }
         if (size >= 16 && size < items.length / 4) {
             resize(items.length / 4);
         }
@@ -73,6 +76,9 @@ public class ArrayDeque<Item> {
     }
 
     public Item removeLast() {
+        if(isEmpty()){
+            return null;
+        }
         if (size >= 16 && size < items.length / 4) {
             resize(items.length / 4);
         }
