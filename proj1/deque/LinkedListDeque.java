@@ -4,7 +4,7 @@ package deque;
  * sentinel.next指向首个节点
  * sentinel.prev指向末尾节点。
  * */
-public class LinkedListDeque<Item> {
+public class LinkedListDeque<Item> implements Deque<Item> {
     private ListNode sentinel;
     private int size;
 

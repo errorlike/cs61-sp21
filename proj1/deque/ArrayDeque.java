@@ -2,7 +2,7 @@ package deque;
 
 //1.数组始终从0开始
 //2. 数组满的时候，nextFirst指向end,nextLast指向start
-public class ArrayDeque<Item> {
+public class ArrayDeque<Item> implements Deque<Item> {
     private int size;
     private Item[] items;
     private int nextFirst;
