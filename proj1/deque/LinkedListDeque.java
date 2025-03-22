@@ -48,10 +48,6 @@ public class LinkedListDeque<Item> implements Deque<Item> {
         size++;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
     public int size() {
         return size;
     }

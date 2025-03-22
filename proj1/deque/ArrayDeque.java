@@ -36,13 +36,6 @@ public class ArrayDeque<Item> implements Deque<Item> {
         size++;
     }
 
-    public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-
     public int size() {
         return size;
     }
