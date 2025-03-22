@@ -11,7 +11,7 @@ public class ArrayDeque<Item> implements Deque<Item> {
     public ArrayDeque() {
         items = (Item[]) new Object[8];
     }
-
+    @Override
     public void addFirst(Item item) {
         if (size == items.length) {
             resize(size * 2);
@@ -23,7 +23,7 @@ public class ArrayDeque<Item> implements Deque<Item> {
         nextFirst = nextFirst - 1 >= 0 ? nextFirst - 1 : items.length - 1;
         size++;
     }
-
+    @Override
     public void addLast(Item item) {
         if (size == items.length) {
             resize(size * 2);
@@ -36,10 +36,12 @@ public class ArrayDeque<Item> implements Deque<Item> {
         size++;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void printDeque() {
         int cursor = getFirstIndex();
         for (int i = 0; i < size; i++) {
@@ -53,6 +55,7 @@ public class ArrayDeque<Item> implements Deque<Item> {
             System.out.println();
     }
 
+    @Override
     public Item removeFirst() {
         if(isEmpty()){
             return null;
@@ -68,6 +71,7 @@ public class ArrayDeque<Item> implements Deque<Item> {
         return removed;
     }
 
+    @Override
     public Item removeLast() {
         if(isEmpty()){
             return null;
@@ -103,6 +107,7 @@ public class ArrayDeque<Item> implements Deque<Item> {
         return newArray;
     }
 
+    @Override
     public Item get(int index) {
         int calculated = (getFirstIndex()+index)% items.length;
         return items[calculated];
