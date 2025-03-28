@@ -10,30 +10,21 @@ public class MaxArrayDeque<Item> extends ArrayDeque<Item> {
     }
 
     public Item max() {
-        Item max = get(0);
-        if (isEmpty() || size() == 1) {
-            return max;
-        }
-
-        for (int i = 0; i < size(); i++) {
-            int diff = comparator.compare(get(i), max);
-            if (diff > 0) {
-                max = get(0);
-            }
-        }
+        Item max = max(this.comparator);
         return max;
     }
 
     public Item max(Comparator<Item> comparator) {
+
         Item max = get(0);
         if (isEmpty() || size() == 1) {
             return max;
         }
-        for (int i = 0; i < size(); i++) {
-            Item current = get(i);
-            int diff = comparator.compare(current, max);
+
+        for (int i = 1; i < size(); i++) {
+            int diff = comparator.compare(get(i), max);
             if (diff > 0) {
-                max = current;
+                max = get(i);
             }
         }
         return max;
