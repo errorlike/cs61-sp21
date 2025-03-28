@@ -27,7 +27,7 @@ public class ArrayDequeTest {
         assertEquals(expected.remove(expected.size() - 1), actual.removeLast());
     }
     @Test
-    public void addOnlyOne(){
+    public void addOnlyOne() {
         ArrayDeque<Integer> list = new ArrayDeque<>();
         list.addFirst(5);
         list.addLast(1);

@@ -36,7 +36,7 @@ public class TimeLinkedListDeque {
             if (i == (int) Math.pow(2, j) * 1000) {
                 Stopwatch stopwatch = new Stopwatch();
                 for (int k = 0; k < M; k++) {
-                    deque.get(deque.size()-1);
+                    deque.get(deque.size() - 1);
                 }
                 double executedTimes = stopwatch.elapsedTime();
 

@@ -3,6 +3,7 @@ package deque;
 //1.数组始终从0开始
 //2. 数组满的时候，nextFirst指向end,nextLast指向start
 public class ArrayDeque<Item> implements Deque<Item> {
+    private static final int RESIZE_FACTOR = 16;
     private int size;
     private Item[] items;
     private int nextFirst;
@@ -11,6 +12,7 @@ public class ArrayDeque<Item> implements Deque<Item> {
     public ArrayDeque() {
         items = (Item[]) new Object[8];
     }
+
     @Override
     public void addFirst(Item item) {
         if (size == items.length) {
@@ -23,13 +25,14 @@ public class ArrayDeque<Item> implements Deque<Item> {
         nextFirst = nextFirst - 1 >= 0 ? nextFirst - 1 : items.length - 1;
         size++;
     }
+
     @Override
     public void addLast(Item item) {
         if (size == items.length) {
             resize(size * 2);
         }
         if (isEmpty()) {
-            nextFirst= items.length-1;
+            nextFirst = items.length - 1;
         }
         items[nextLast] = item;
         nextLast = nextLast + 1 != items.length ? nextLast + 1 : 0;
@@ -52,18 +55,18 @@ public class ArrayDeque<Item> implements Deque<Item> {
             }
             cursor = cursor + 1 != items.length ? cursor + 1 : 0;
         }
-            System.out.println();
+        System.out.println();
     }
 
     @Override
     public Item removeFirst() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return null;
         }
-        if (size >= 16 && size < items.length / 4) {
+        if (size >= RESIZE_FACTOR && size < items.length / 4) {
             resize(items.length / 4);
         }
-        int first =getFirstIndex();
+        int first = getFirstIndex();
         Item removed = items[first];
         items[first] = null;
         size--;
@@ -73,10 +76,10 @@ public class ArrayDeque<Item> implements Deque<Item> {
 
     @Override
     public Item removeLast() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return null;
         }
-        if (size >= 16 && size < items.length / 4) {
+        if (size >= RESIZE_FACTOR && size < items.length / 4) {
             resize(items.length / 4);
         }
         int last = getLastIndex();
@@ -109,7 +112,7 @@ public class ArrayDeque<Item> implements Deque<Item> {
 
     @Override
     public Item get(int index) {
-        int calculated = (getFirstIndex()+index)% items.length;
+        int calculated = (getFirstIndex() + index) % items.length;
         return items[calculated];
     }
 

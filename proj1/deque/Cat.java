@@ -28,7 +28,7 @@ public class Cat implements Comparable<Cat> {
         return new NameComparator();
     }
 
-    private static class nameLengthComparator implements Comparator<Cat> {
+    private static class NameLengthComparator implements Comparator<Cat> {
         @Override
         public int compare(Cat o1, Cat o2) {
             return o1.compareTo(o2);
@@ -36,6 +36,6 @@ public class Cat implements Comparable<Cat> {
     }
 
     public static Comparator<Cat> getNameLengthComparator() {
-        return new nameLengthComparator();
+        return new NameLengthComparator();
     }
 }

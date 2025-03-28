@@ -11,12 +11,14 @@ public class MaxArrayDequeTest {
         MaxArrayDeque<Integer> maxArrayDeque = new MaxArrayDeque<>(Integer::compareTo);
         assertNull(maxArrayDeque.max());
     }
+
     @Test
     public void testEmptyDequeWithHasComparatorMax() {
         MaxArrayDeque<Exam> maxArrayDeque = new MaxArrayDeque<>(Exam::compareTo);
         assertNull(maxArrayDeque.max(Exam.getGradeComparator()));
         assertNull(maxArrayDeque.max(Exam.getIdentityComparator()));
     }
+
     @Test
     public void testDifferentComparator() {
         Cat carA = new Cat("a", 2);
@@ -27,18 +29,18 @@ public class MaxArrayDequeTest {
         maxArrayDeque.addFirst(carB);
 
         assertEquals(carB, maxArrayDeque.max());
-        assertEquals(carB,maxArrayDeque.max(Cat.getNameComparator()));
+        assertEquals(carB, maxArrayDeque.max(Cat.getNameComparator()));
 
 
-        Exam exam1 = new Exam("zuana", 80.5, 44134124323L);
-        Exam exam2 = new Exam("lihua", 82.5, 54134124329L);
+        Exam exam1 = new Exam("buanaf", 85.5, 44134124323L);
+        Exam exam2 = new Exam("lihua", 87.5, 54134124329L);
         MaxArrayDeque<Exam> examMaxArrayDeque = new MaxArrayDeque<>(Exam.getGradeComparator());
 
         examMaxArrayDeque.addLast(exam1);
         examMaxArrayDeque.addLast(exam2);
 
-        assertEquals(exam1,examMaxArrayDeque.max());
-        assertEquals(exam2,examMaxArrayDeque.max(Exam.getIdentityComparator()));
+        assertEquals(exam2, examMaxArrayDeque.max());
+        assertEquals(exam2, examMaxArrayDeque.max(Exam.getIdentityComparator()));
     }
 
 }

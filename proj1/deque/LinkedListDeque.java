@@ -13,9 +13,9 @@ public class LinkedListDeque<Item> implements Deque<Item> {
     }
 
     private class ListNode {
-        public Item item;
-        public ListNode prev;
-        public ListNode next;
+        private Item item;
+        private ListNode prev;
+        private ListNode next;
 
         public ListNode(Item item, ListNode prev, ListNode next) {
             this.next = next;

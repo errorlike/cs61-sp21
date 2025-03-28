@@ -38,7 +38,7 @@ public class Exam implements Comparable<Exam> {
         return new IdentityNumberComparator();
     }
 
-    public static Comparator<Exam> getGradeComparator(){
+    public static Comparator<Exam> getGradeComparator() {
         return new GradeComparater();
     }
 }
