@@ -127,4 +127,50 @@ public class LinkedListDeque<Item> implements Deque<Item> {
         }
         System.out.println();
     }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return new LinkedListDequeIterator();
+    }
+
+    private class LinkedListDequeIterator implements Iterator<Item> {
+        private int cursor;
+
+        @Override
+        public boolean hasNext() {
+            return cursor < size;
+        }
+
+        @Override
+        public Item next() {
+            Item item = get(cursor);
+            cursor++;
+            return item;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof LinkedListDeque that)) {
+            return false;
+        }
+        if (this.size != that.size) {
+            return false;
+        }
+        ListNode thisPoint = this.sentinel.next;
+        ListNode thatPoint = that.sentinel.next;
+        int count = 0;
+        while (thisPoint != null && count < size) {
+            if (!thisPoint.item.equals(thatPoint.item)) {
+                return false;
+            }
+            thisPoint = thisPoint.next;
+            thatPoint = thatPoint.next;
+            count++;
+        }
+        return true;
+    }
 }
