@@ -1,8 +1,10 @@
 package deque;
 
+import java.util.Iterator;
+
 //1.数组始终从0开始
 //2. 数组满的时候，nextFirst指向end,nextLast指向start
-public class ArrayDeque<Item> implements Deque<Item> {
+public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
     private static final int RESIZE_FACTOR = 16;
     private int size;
     private Item[] items;
@@ -70,6 +72,9 @@ public class ArrayDeque<Item> implements Deque<Item> {
         Item removed = items[first];
         items[first] = null;
         size--;
+        if (size == 0) {
+            nextLast = 0;
+        }
         nextFirst = first;
         return removed;
     }
@@ -86,6 +91,9 @@ public class ArrayDeque<Item> implements Deque<Item> {
         Item removed = items[last];
         items[last] = null;
         size--;
+        if (size == 0) {
+            nextFirst = 0;
+        }
         nextLast = last;
         return removed;
     }
@@ -123,4 +131,46 @@ public class ArrayDeque<Item> implements Deque<Item> {
     private int getLastIndex() {
         return nextLast - 1 >= 0 ? nextLast - 1 : size - 1;
     }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    private class ArrayDequeIterator implements Iterator<Item> {
+        private int cursor;
+
+        @Override
+        public boolean hasNext() {
+            return cursor < size;
+        }
+
+        @Override
+        public Item next() {
+            Item item = get(cursor);
+            cursor++;
+            return item;
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ArrayDeque<?> that)) {
+            return false;
+        }
+        if (this.size != that.size) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (!this.get(i).equals(that.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

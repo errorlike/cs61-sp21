@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ArrayDequeTest {
 
@@ -101,5 +101,21 @@ public class ArrayDequeTest {
         ArrayDeque<Integer> list = new ArrayDeque<>();
         list.removeLast();
         list.removeFirst();
+    }
+    @Test
+    public  void testArrayIsEmptyAfterAddingAndDeletingItem(){
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+        list.addFirst(1);
+        list.removeFirst();
+        list.addLast(1);
+        assertNotNull(list.get(0));
+    }
+    @Test
+    public  void testArrayIsEmptyAfterAddingAndDeletingItemReverse(){
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+        list.addLast(1);
+        list.removeLast();
+        list.addFirst(1);
+        assertNotNull(list.get(0));
     }
 }
