@@ -1,15 +1,21 @@
 package deque;
 
+import jh61b.junit.In;
+
+import java.util.Iterator;
+
 /*
  * sentinel.next指向首个节点
  * sentinel.prev指向末尾节点。
  * */
-public class LinkedListDeque<Item> implements Deque<Item> {
-    private ListNode sentinel;
+public class LinkedListDeque<Item> implements Deque<Item>, Iterable<Item> {
+    private final ListNode sentinel;
     private int size;
 
     public LinkedListDeque() {
         sentinel = new ListNode(null, null, null);
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
     }
 
     private class ListNode {
