@@ -21,7 +21,7 @@ public class LinkedListDeque<Item> implements Deque<Item>, Iterable<Item> {
         private ListNode prev;
         private ListNode next;
 
-        public ListNode(Item item, ListNode prev, ListNode next) {
+        private ListNode(Item item, ListNode prev, ListNode next) {
             this.next = next;
             this.prev = prev;
             this.item = item;

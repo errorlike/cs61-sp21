@@ -159,7 +159,7 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
         if (o == this) {
             return true;
         }
-        if (!(o instanceof ArrayDeque )) {
+        if (!(o instanceof ArrayDeque)) {
             return false;
         }
         ArrayDeque<?> that = (ArrayDeque) o;
