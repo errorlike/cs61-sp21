@@ -160,9 +160,10 @@ public class LinkedListDeque<Item> implements Deque<Item>, Iterable<Item> {
         if (o == this) {
             return true;
         }
-        if (!(o instanceof LinkedListDeque that)) {
+        if (!(o instanceof LinkedListDeque )) {
             return false;
         }
+        var that = (LinkedListDeque) o;
         if (this.size != that.size) {
             return false;
         }
@@ -178,5 +179,13 @@ public class LinkedListDeque<Item> implements Deque<Item>, Iterable<Item> {
             count++;
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        LinkedListDeque<Integer> list = new LinkedListDeque<>();
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(3);
+        list.forEach(System.out::println);
     }
 }
