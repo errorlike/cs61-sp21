@@ -1,7 +1,5 @@
 package deque;
 
-import jh61b.junit.In;
-
 import java.util.Iterator;
 
 /*
@@ -160,7 +158,7 @@ public class LinkedListDeque<Item> implements Deque<Item>, Iterable<Item> {
         if (o == this) {
             return true;
         }
-        if (!(o instanceof LinkedListDeque )) {
+        if (!(o instanceof LinkedListDeque)) {
             return false;
         }
         var that = (LinkedListDeque) o;

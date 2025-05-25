@@ -6,11 +6,13 @@ import java.util.ArrayList;
 
 public class TimeLinkedListDeque {
 
-    private static void printTimingTable(ArrayList<Integer> Ns, ArrayList<Double> times, ArrayList<Integer> opCounts) {
+    private static void printTimingTable(ArrayList<Integer> ns,
+                                         ArrayList<Double> times,
+                                         ArrayList<Integer> opCounts) {
         System.out.printf("%12s %12s %12s %12s\n", "N", "time (s)", "# ops", "microsec/op");
         System.out.printf("------------------------------------------------------------\n");
-        for (int i = 0; i < Ns.size(); i += 1) {
-            int N = Ns.get(i);
+        for (int i = 0; i < ns.size(); i += 1) {
+            int N = ns.get(i);
             double time = times.get(i);
             int opCount = opCounts.get(i);
             double timePerOp = time / opCount * 1e6;
@@ -26,7 +28,7 @@ public class TimeLinkedListDeque {
         LinkedListDeque<Integer> deque = new LinkedListDeque<>();
 
         int j = 0;
-        ArrayList<Integer> Ns = new ArrayList<>();
+        ArrayList<Integer> ns = new ArrayList<>();
         ArrayList<Double> times = new ArrayList<>();
         ArrayList<Integer> opCounts = new ArrayList<>();
         int M = 10000;
@@ -40,12 +42,12 @@ public class TimeLinkedListDeque {
                 }
                 double executedTimes = stopwatch.elapsedTime();
 
-                Ns.add(i);
+                ns.add(i);
                 times.add(executedTimes);
                 opCounts.add(M);
                 j++;
             }
         }
-        printTimingTable(Ns, times, opCounts);
+        printTimingTable(ns, times, opCounts);
     }
 }

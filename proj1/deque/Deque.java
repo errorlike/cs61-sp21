@@ -2,21 +2,21 @@ package deque;
 
 public interface Deque<Item> {
 
-    public void addFirst(Item item);
+    void addFirst(Item item);
 
-    public void addLast(Item item);
+    void addLast(Item item);
 
-    public default boolean isEmpty() {
+    default boolean isEmpty() {
         return size() == 0;
     }
 
-    public int size();
+    int size();
 
-    public void printDeque();
+    void printDeque();
 
-    public Item removeFirst();
+    Item removeFirst();
 
-    public Item removeLast();
+    Item removeLast();
 
-    public Item get(int index);
+    Item get(int index);
 }

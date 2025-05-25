@@ -14,7 +14,7 @@ public class MaxArrayDeque<Item> extends ArrayDeque<Item> {
         return max;
     }
 
-    public Item max(Comparator<Item> comparator) {
+    public Item max(Comparator<Item> provideComparator) {
 
         Item max = get(0);
         if (isEmpty() || size() == 1) {
@@ -22,7 +22,7 @@ public class MaxArrayDeque<Item> extends ArrayDeque<Item> {
         }
 
         for (int i = 1; i < size(); i++) {
-            int diff = comparator.compare(get(i), max);
+            int diff = provideComparator.compare(get(i), max);
             if (diff > 0) {
                 max = get(i);
             }
