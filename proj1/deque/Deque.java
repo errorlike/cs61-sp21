@@ -1,10 +1,10 @@
 package deque;
 
-public interface Deque<Item> {
+public interface Deque<T> {
 
-    void addFirst(Item item);
+    void addFirst(T t);
 
-    void addLast(Item item);
+    void addLast(T t);
 
     default boolean isEmpty() {
         return size() == 0;
@@ -14,9 +14,9 @@ public interface Deque<Item> {
 
     void printDeque();
 
-    Item removeFirst();
+    T removeFirst();
 
-    Item removeLast();
+    T removeLast();
 
-    Item get(int index);
+    T get(int index);
 }

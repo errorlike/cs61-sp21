@@ -4,40 +4,40 @@ import java.util.Iterator;
 
 //1.数组始终从0开始
 //2. 数组满的时候，nextFirst指向end,nextLast指向start
-public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private static final int RESIZE_FACTOR = 16;
     private int size;
-    private Item[] items;
+    private T[] ts;
     private int nextFirst;
     private int nextLast;
 
     public ArrayDeque() {
-        items = (Item[]) new Object[8];
+        ts = (T[]) new Object[8];
     }
 
     @Override
-    public void addFirst(Item item) {
-        if (size == items.length) {
+    public void addFirst(T t) {
+        if (size == ts.length) {
             resize(size * 2);
         }
         if (isEmpty()) {
             nextLast++;
         }
-        items[nextFirst] = item;
-        nextFirst = nextFirst - 1 >= 0 ? nextFirst - 1 : items.length - 1;
+        ts[nextFirst] = t;
+        nextFirst = nextFirst - 1 >= 0 ? nextFirst - 1 : ts.length - 1;
         size++;
     }
 
     @Override
-    public void addLast(Item item) {
-        if (size == items.length) {
+    public void addLast(T t) {
+        if (size == ts.length) {
             resize(size * 2);
         }
         if (isEmpty()) {
-            nextFirst = items.length - 1;
+            nextFirst = ts.length - 1;
         }
-        items[nextLast] = item;
-        nextLast = nextLast + 1 != items.length ? nextLast + 1 : 0;
+        ts[nextLast] = t;
+        nextLast = nextLast + 1 != ts.length ? nextLast + 1 : 0;
         size++;
     }
 
@@ -51,26 +51,26 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
         int cursor = getFirstIndex();
         for (int i = 0; i < size; i++) {
             if (i == size - 1) {
-                System.out.print(items[cursor]);
+                System.out.print(ts[cursor]);
             } else {
-                System.out.print(items[cursor] + " ");
+                System.out.print(ts[cursor] + " ");
             }
-            cursor = cursor + 1 != items.length ? cursor + 1 : 0;
+            cursor = cursor + 1 != ts.length ? cursor + 1 : 0;
         }
         System.out.println();
     }
 
     @Override
-    public Item removeFirst() {
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
-        if (size >= RESIZE_FACTOR && size < items.length / 4) {
-            resize(items.length / 4);
+        if (size >= RESIZE_FACTOR && size < ts.length / 4) {
+            resize(ts.length / 4);
         }
         int first = getFirstIndex();
-        Item removed = items[first];
-        items[first] = null;
+        T removed = ts[first];
+        ts[first] = null;
         size--;
         if (size == 0) {
             nextLast = 0;
@@ -80,16 +80,16 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
     }
 
     @Override
-    public Item removeLast() {
+    public T removeLast() {
         if (isEmpty()) {
             return null;
         }
-        if (size >= RESIZE_FACTOR && size < items.length / 4) {
-            resize(items.length / 4);
+        if (size >= RESIZE_FACTOR && size < ts.length / 4) {
+            resize(ts.length / 4);
         }
         int last = getLastIndex();
-        Item removed = items[last];
-        items[last] = null;
+        T removed = ts[last];
+        ts[last] = null;
         size--;
         if (size == 0) {
             nextFirst = 0;
@@ -99,33 +99,33 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
     }
 
     private void resize(int capacity) {
-        items = copyArray(capacity);
-        nextFirst = items.length - 1;
+        ts = copyArray(capacity);
+        nextFirst = ts.length - 1;
         nextLast = size;
     }
 
-    private Item[] copyArray(int capacity) {
-        Item[] newArray = (Item[]) new Object[capacity];
+    private T[] copyArray(int capacity) {
+        T[] newArray = (T[]) new Object[capacity];
 
         int cursor = getFirstIndex();
         for (int i = 0; i < size; i++) {
             if (cursor == size) {
                 cursor = 0;
             }
-            newArray[i] = items[cursor];
+            newArray[i] = ts[cursor];
             cursor++;
         }
         return newArray;
     }
 
     @Override
-    public Item get(int index) {
-        int calculated = (getFirstIndex() + index) % items.length;
-        return items[calculated];
+    public T get(int index) {
+        int calculated = (getFirstIndex() + index) % ts.length;
+        return ts[calculated];
     }
 
     private int getFirstIndex() {
-        return nextFirst + 1 != items.length ? nextFirst + 1 : 0;
+        return nextFirst + 1 != ts.length ? nextFirst + 1 : 0;
     }
 
     private int getLastIndex() {
@@ -133,11 +133,11 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
     }
 
     @Override
-    public Iterator<Item> iterator() {
+    public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }
 
-    private class ArrayDequeIterator implements Iterator<Item> {
+    private class ArrayDequeIterator implements Iterator<T> {
         private int cursor;
 
         @Override
@@ -146,10 +146,10 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
         }
 
         @Override
-        public Item next() {
-            Item item = get(cursor);
+        public T next() {
+            T t = get(cursor);
             cursor++;
-            return item;
+            return t;
         }
 
     }

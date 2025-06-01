@@ -2,21 +2,21 @@ package deque;
 
 import java.util.Comparator;
 
-public class MaxArrayDeque<Item> extends ArrayDeque<Item> {
-    private final Comparator<Item> comparator;
+public class MaxArrayDeque<T> extends ArrayDeque<T> {
+    private final Comparator<T> comparator;
 
-    public MaxArrayDeque(Comparator<Item> comparator) {
+    public MaxArrayDeque(Comparator<T> comparator) {
         this.comparator = comparator;
     }
 
-    public Item max() {
-        Item max = max(this.comparator);
+    public T max() {
+        T max = max(this.comparator);
         return max;
     }
 
-    public Item max(Comparator<Item> provideComparator) {
+    public T max(Comparator<T> provideComparator) {
 
-        Item max = get(0);
+        T max = get(0);
         if (isEmpty() || size() == 1) {
             return max;
         }
